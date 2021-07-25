@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src='script.js' defer></script>
+
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Lab 04 - ssmilesquare</title>
+
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap" rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="slick/slick.css" rel="stylesheet" /> <!-- https://kenwheeler.github.io/slick/ -->
+
+</head>
+
+<body style="font-family: 'Source Code Pro', serif;" class=" bg-purple-200">
+	<div class="max-w-max mx-auto p-4">
+		<h1 class="max-w-max mx-auto text-3xl non-italic">Minimal Todo List</h1>
+		<input  class = "lg:transform duration-500 hover:scale-125 p-2 focus:bg-white focus:text-black focus:border-purple-500 outline-none rounded-xl " placeholder = "@Add your list here" type='text' input id="Input" oninput="listInput(event)">
+		<!-- <button class = "p-2 transform duration-500 hover:scale-125 text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-md h-auto sm:w-1/6 md:w-1/12 font-black text-md focus:ring-2 focus:ring-red-600 ring-offset-2 ring-offset-red-200 focus:ring-opacity-50 focus:outline-none" onclick = "addTodoList()">+</button> -->
+		<button class = "bg-yellow-200 mt-2 ml-2 pl-4 pr-4 rounded-md p-1.5 font-semibold cursor-pointer transform hover:-translate-y-1 hover:scale-110 transition duration-200 ease-in-out" button id="Button" onclick="addlist(0)">+</button> 
+		<!-- <button id="Button" onclick="addlist(0)" class="bg-yellow-200 mt-2 ml-2 pl-4 pr-4 rounded-md p-1.5 font-semibold cursor-pointer transform hover:-translate-y-1 hover:scale-110 transition duration-200 ease-in-out">+</button> -->
+	</div>
+</body>
+
+</html>
