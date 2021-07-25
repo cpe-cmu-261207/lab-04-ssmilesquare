@@ -1,34 +1,50 @@
-const mainDiv = document.createElement('div')
-mainDiv.setAttribute('class', 'max-w-sm mx-auto text-lgs')
-const comDiv = document.createElement('div')
-comDiv.setAttribute('class', 'max-w-sm mx-auto p-2 text-lg bg-gray-400 rounded-xl')
+const mylist = document.createElement('div')
+mylist.setAttribute('class', 'max-w-sm mx-auto p-2 text-lg bg-gray-400 rounded-xl')
+const detail = document.createElement('div')
+detail.setAttribute('class', 'max-w-sm mx-auto text-lgs')
 
-// Add
+const loadFromStr = () =>{
+    for (let i = 0; i <localStorage.getItem('done'); i++) {
+        if (localStorage.getItem('key' + i )!== null) {
+            const del1 = document.createElement('del')
+            del1.innerHTML = localStorage.getItem('key' + i)
+            del1.append(document.createElement('br'))
+            mylist.prepend(del1)
+        }
+    }
+    document.body.append(mylist)
+}
+
+loadFromStr()
+
+// Add list 
 const addlist = (backup) => {
+    const input = document.querySelector("input")
+    if (input.value === "") alert("please fill up the task!!!")
     let listadd = { dolist:[]}
-    const Taskspan = document.createElement('p')
-    Taskspan.setAttribute('class', 'group flex justify-between p-2 border-b-2 transform hover:-translate-y-1 hover:scale-110 transition duration-200 ease-in-out rounded-xl hover:shadow-lg bg-white')
+    const task = document.createElement('p')
+    task.setAttribute('class', 'group flex justify-between p-2 border-b-2 transform hover:-translate-y-1 hover:scale-110 transition duration-200 ease-in-out rounded-xl hover:shadow-lg bg-white')
     const span = document.createElement('p')
     const btndiv = document.createElement('div')
     btndiv.setAttribute('class', 'space-x-4')
-    if (currentInput != "") {
-        span.innerHTML = currentInput
+    if (input.value != "") {
+        span.innerHTML = input.value
         if(backup===0)
         {
-            listadd.dolist.push(currentInput)
+            listadd.dolist.push(input.value)
             localStorage.listadd = JSON.stringify(listadd)
         }
-        Taskspan.append(span)
+        task.append(span)
         input.value=""
 
-        // <done>
-        const comBtn = document.createElement('button')
-        comBtn.setAttribute('class', 'text-white  pr-4 pl-4 group-hover:bg-blue-100 group-hover:text-black rounded-lg')
-        comBtn.innerHTML = "Done"
-        comBtn.addEventListener('click', () => {
+        // <done button>
+        const donebutton = document.createElement('button')
+        donebutton.setAttribute('class', 'text-white  pr-4 pl-4 group-hover:bg-blue-100 group-hover:text-black rounded-lg')
+        donebutton.innerHTML = "Done"
+        donebutton.addEventListener('click', () => {
             const del = document.createElement('del')
             let test = localStorage.getItem('done')
-            window.localStorage.setItem('key' + test,[ span.innerHTML])
+            window.localStorage.setItem('key' + test,[span.innerHTML])
             del.innerHTML = localStorage.getItem('key' + test)
             test++
             window.localStorage.setItem('done', test)
@@ -36,36 +52,37 @@ const addlist = (backup) => {
             listadd.dolist.splice(listadd.dolist.indexOf(del.innerHTML),1)
             localStorage.listadd = JSON.stringify(listadd)
             del.append(document.createElement('br'))
-            comDiv.prepend(del)
-            mainDiv.removeChild(Taskspan)
+            mylist.prepend(del)
+            detail.removeChild(task)
         })
-        // <delete>
+        // <delete button>
         const delBtn = document.createElement('button')
         delBtn.setAttribute('class', 'text-white  pr-3 pl-3 group-hover:bg-red-100 group-hover:text-black rounded-lg')
         delBtn.innerHTML = "Delete"
         delBtn.addEventListener('click', () => {
             listadd.dolist.splice(listadd.dolist.indexOf(span.innerHTML),1)
             localStorage.listadd = JSON.stringify(listadd)
-            mainDiv.removeChild(Taskspan)
+            detail.removeChild(task)
         })
 
-        btndiv.append(comBtn)
+        btndiv.append(donebutton)
         btndiv.append(delBtn)
-        Taskspan.append(btndiv)
-        mainDiv.prepend(Taskspan)
-        document.body.append(mainDiv)
-        document.body.append(comDiv)
-    }
-    else {
-        alert("please fill up the task!!!")
+        task.append(btndiv)
+        detail.prepend(task)
+        document.body.append(detail)
+        document.body.append(mylist)
     }
 }
 
-let currentInput = ""
-const listInput = (event) => {
-    currentInput = event.target.value
-}
+// let myinput = ""
+// const listInput = (event) => {
+//     myinput = event.target.value
+// }
 
+if (localStorage.length === 0) {
+    window.localStorage.setItem('done', 0)
+    window.localStorage.setItem('list', 0)
+}
 // Enter
 const input = document.getElementById("Input")
 input.addEventListener('keyup', (event) => {
@@ -74,31 +91,3 @@ input.addEventListener('keyup', (event) => {
         document.getElementById('Button').click()
     }
 })
-
-if (localStorage.length === 0) {
-    window.localStorage.setItem('done', 0)
-    window.localStorage.setItem('list', 0)
-}
-
-const loadDoStr = () => {
-    if(localStorage.listadd) listadd = JSON.parse(localStorage.listadd)
-    for(let i = 0 ; i< listadd.dolist.length;i++)
-    {
-        currentInput = listadd.dolist[i]
-        addlist(1)
-    }
-}
-const loadDoneStr = () =>{
-    for (let i = 0; i <localStorage.getItem('done'); i++) {
-        if (localStorage.getItem('key' + i )!== null) {
-            const del1 = document.createElement('del')
-            del1.innerHTML = localStorage.getItem('key' + i)
-            del1.append(document.createElement('br'))
-            comDiv.prepend(del1)
-        }
-    }
-    document.body.append(comDiv)
-}
-
-loadDoStr()
-loadDoneStr()
